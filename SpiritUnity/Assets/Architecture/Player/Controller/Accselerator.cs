@@ -30,4 +30,3 @@ class Accelerator
         return momentSpeed;
     }
 }
-}

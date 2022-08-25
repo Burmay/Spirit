@@ -32,7 +32,7 @@ public class UnitBehaviourInteractor
         }
         else
         {
-            return 
+            return 0; //Del
         }
     }
 
