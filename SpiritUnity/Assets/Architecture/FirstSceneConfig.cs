@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FirstSceneConfig : SceneConfig
 {
-    public const string SCENE_NAME = "SampleScene";
+    public const string SCENE_NAME = "TestScene";
 
     public override string sceneName => SCENE_NAME;
 
@@ -16,6 +16,7 @@ public class FirstSceneConfig : SceneConfig
         var interactorsRoll = new Dictionary<Type, Interactor>();
 
         this.CreateInteractor<InventoryInteractor>(interactorsRoll);
+        this.CreateInteractor<UnitBehaviourInteractor>(interactorsRoll);
 
         return interactorsRoll;
     }
@@ -25,6 +26,7 @@ public class FirstSceneConfig : SceneConfig
         var repositoriesRoll = new Dictionary<Type, Repository>();
 
         this.CreateRepository<InventoryRepository>(repositoriesRoll);
+        this.CreateRepository<UnitBehaviourRepository>(repositoriesRoll);
 
         return repositoriesRoll;
     }

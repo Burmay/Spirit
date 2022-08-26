@@ -8,26 +8,24 @@ public class WarriorActionsController : UnitBase
 
     void Start()
     {
-        rigidbody.GetComponent<Rigidbody2D>();
+        unitBehaviourInteractor = Game.GetInteractor<UnitBehaviourInteractor>();
+        rigidbody = new Rigidbody2D();
+        rigidbody = GetComponent<Rigidbody2D>();
+
         base.HP = 2;
         base.maxSpeed = 2;
         base.timeAcc = 0.5f;
         currentSpeed = default;
     }
 
-    public override void SetLink(UnitBehaviourInteractor unitBehaviourInteractor)
-    {
-        base.SetLink(unitBehaviourInteractor);
-    }
-
     protected override void HorisontalMove(int dir)
     {
-        rigidbody.position += new Vector2(0, unitBehaviourInteractor.HorisonMove(currentSpeed, maxSpeed, dir, timeAcc));
+        rigidbody.position += new Vector2(unitBehaviourInteractor.HorisonMove(currentSpeed, maxSpeed, dir, timeAcc), 0);
     }
 
-    void Update()
+    protected override void Update()
     {
-        InputProcessing();
+        base.Update();
     }
 
     protected override void InputProcessing()

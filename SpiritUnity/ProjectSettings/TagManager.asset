@@ -8,6 +8,7 @@ TagManager:
   - Tank
   - Warrior
   - Shooter
+  - BaseUnit
   layers:
   - Default
   - TransparentFX

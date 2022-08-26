@@ -8,20 +8,28 @@ public class TankActionsController : UnitBase
 
     void Start()
     {
-        rigidbody.GetComponent<Rigidbody2D>();
+        unitBehaviourInteractor = Game.GetInteractor<UnitBehaviourInteractor>();
+        rigidbody = new Rigidbody2D();
+        rigidbody = GetComponent<Rigidbody2D>();
+
         base.HP = 3;
         this.maxSpeed = 1;
         base.timeAcc = 1f;
         currentSpeed = default;
     }
 
-    public override void SetLink(UnitBehaviourInteractor unitBehaviourInteractor)
+    protected override void HorisontalMove(int dir)
     {
-        base.SetLink(unitBehaviourInteractor);
+        rigidbody.position += new Vector2(unitBehaviourInteractor.HorisonMove(currentSpeed, maxSpeed, dir, timeAcc), 0);
     }
 
-    void Update()
+    protected override void Update()
     {
-        
+        base.Update();
+    }
+
+    protected override void InputProcessing()
+    {
+        base.InputProcessing();
     }
 }

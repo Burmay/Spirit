@@ -4,7 +4,7 @@ using UnityEngine;
 class Accelerator
 {
     // super
-    public static float Acceleration(float accTime, float maxSpeed, float momentSpeed)
+    public float Acceleration(float accTime, float maxSpeed, float momentSpeed, int dir)
     {
         float currentSpeed;
         if (Math.Abs(accTime) > Double.Epsilon)
@@ -16,17 +16,19 @@ class Accelerator
             else
             {
                 currentSpeed = Time.deltaTime / accTime;
-                //if (momentSpeed < 0) momentSpeed = 0;
             }
         }
         else
         {
             currentSpeed = 0;
         }
-
-
-
-
-        return momentSpeed;
+        if(dir > 0)
+        {
+            return currentSpeed;
+        }
+        else
+        {
+            return -currentSpeed;
+        }
     }
 }
