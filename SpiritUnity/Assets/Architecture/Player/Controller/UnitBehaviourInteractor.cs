@@ -5,25 +5,22 @@ using System;
 
 public class UnitBehaviourInteractor : Interactor
 {
-    GameObject girlTag, tankTag, warriorTag, shooterTag, unitBaseTag;
+    GameObject girlTag, tankTag, warriorTag, shooterTag;
     GirlsActionsController girl;
     TankActionsController tank;
     ShooterActionsController shooter;
     WarriorActionsController warrior;
-    UnitBase unitBase;
 
     Accelerator accelerator;
 
     public override void OnCreate()
     {
         base.OnCreate();
-        unitBaseTag = GameObject.FindGameObjectWithTag("BaseUnit");
         girlTag = GameObject.FindGameObjectWithTag("Girl");
         tankTag = GameObject.FindGameObjectWithTag("Tank");
         warriorTag = GameObject.FindGameObjectWithTag("Warrior");
         shooterTag = GameObject.FindGameObjectWithTag("Shooter");
 
-        unitBase = unitBaseTag.GetComponent<UnitBase>();
         girl = girlTag.GetComponent<GirlsActionsController>();
         tank = tankTag.GetComponent<TankActionsController>();
         warrior = warriorTag.GetComponent<WarriorActionsController>();
@@ -33,30 +30,26 @@ public class UnitBehaviourInteractor : Interactor
         accelerator = new Accelerator();
     }
 
-    public float HorisonMove(float currentSpeed, float maxSpeed, int dir, float timeAcc)
+    public Vector2 HorisonMove(float currentSpeed, float maxSpeed, int dir, float timeAcc)
     {
         if(Math.Abs(currentSpeed) >= maxSpeed)
         {
-            return 0;
+            return new Vector2(0,0);
         }
         else
         {
-            return accelerator.Acceleration(timeAcc, maxSpeed, currentSpeed, dir);
+            return new Vector2(accelerator.Acceleration(timeAcc, maxSpeed, currentSpeed, dir),0);
         }
     }
 
-    public void ActivePerson()
+    public Vector2 Fall()
     {
-
+        return new Vector2(0, 4 * Time.fixedDeltaTime);
     }
 
-    public void Fall()
+    public Vector2 Jump()
     {
-
-    }
-
-    public void Jump()
-    {
-
+        //return new Vector2(accelerator.Acceleration(timeAcc, maxSpeed, currentSpeed, dir), 0);
+        return new Vector2(0, 3 * Time.fixedDeltaTime);
     }
 }

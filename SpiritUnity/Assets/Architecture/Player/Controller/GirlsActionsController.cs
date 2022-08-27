@@ -20,16 +20,37 @@ public class GirlsActionsController : UnitBase
 
     protected override void HorisontalMove(int dir)
     {
-        rigidbody.position += new Vector2(unitBehaviourInteractor.HorisonMove(currentSpeed, maxSpeed, dir, timeAcc), 0);
+        rigidbody.position += (unitBehaviourInteractor.HorisonMove(currentSpeed, maxSpeed, dir, timeAcc));
     }
 
-    protected override void Update()
+    protected override void FixedUpdate()
     {
-        base.Update();
+        base.FixedUpdate();
     }
 
     protected override void InputProcessing()
     {
         base.InputProcessing();
+        if (Input.GetKey(KeyCode.W))
+        {
+            Jump();
+            isJump = true;
+        }
+        else
+        {
+            isJump = false;
+        }
+    }
+
+    protected override void Fall()
+    {
+        base.Fall();
+        rigidbody.position -= unitBehaviourInteractor.Fall();
+    }
+
+    protected override void Jump()
+    {
+        base.Jump();
+        rigidbody.position += unitBehaviourInteractor.Jump();
     }
 }

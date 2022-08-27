@@ -20,16 +20,29 @@ public class TankActionsController : UnitBase
 
     protected override void HorisontalMove(int dir)
     {
-        rigidbody.position += new Vector2(unitBehaviourInteractor.HorisonMove(currentSpeed, maxSpeed, dir, timeAcc), 0);
+        base.HorisontalMove(dir);
+        rigidbody.position += unitBehaviourInteractor.HorisonMove(currentSpeed, maxSpeed, dir, timeAcc);
     }
 
-    protected override void Update()
+    protected override void Fall()
     {
-        base.Update();
+        base.Fall();
+        rigidbody.position -= unitBehaviourInteractor.Fall();
+    }
+
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
     }
 
     protected override void InputProcessing()
     {
         base.InputProcessing();
+    }
+
+    protected override void Jump()
+    {
+        base.Jump();
+        rigidbody.position += unitBehaviourInteractor.Jump();
     }
 }

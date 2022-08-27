@@ -4,66 +4,97 @@ using UnityEngine;
 
 public class CharacterSwichier : MonoBehaviour
 {
-    enum Character
-    {
-        Girl = 0,
-        Tank = 1,
-        Warrior = 2,
-        Shooter = 3
-    }
+    GameObject girlTag, tankTag, warriorTag, shooterTag;
+    GirlsActionsController girl;
+    TankActionsController tank;
+    ShooterActionsController shooter;
+    WarriorActionsController warrior;
 
-    int[] arrayCharacter;
-    int choiseCharacter;
+    UnitBase[] units;
+    int active;
 
     private void Start()
     {
-        arrayCharacter = new int[3];
-        arrayCharacter[0] = 0;
-        arrayCharacter[1] = 1;
-        arrayCharacter[2] = 2;
-        arrayCharacter[3] = 3;
-        choiseCharacter = 0;
+        units = new UnitBase[4];
+        girlTag = GameObject.FindGameObjectWithTag("Girl");
+        tankTag = GameObject.FindGameObjectWithTag("Tank");
+        warriorTag = GameObject.FindGameObjectWithTag("Warrior");
+        shooterTag = GameObject.FindGameObjectWithTag("Shooter");
+
+        girl = girlTag.GetComponent<GirlsActionsController>();
+        tank = tankTag.GetComponent<TankActionsController>();
+        warrior = warriorTag.GetComponent<WarriorActionsController>();
+        shooter = shooterTag.GetComponent<ShooterActionsController>();
+
+        units[0] = girl;
+        units[1] = tank;
+        units[2] = warrior;
+        units[3] = shooter;
+
+        girl.acteve = true;
+        active = 0;
     }
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Q))
+        Debug.Log(active);
+        if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.E))
         {
-            if(choiseCharacter > 0)
-            {
-                choiseCharacter = arrayCharacter[choiseCharacter - 1];
-            }
-            else
-            {
-                choiseCharacter = 3;
-            }
-        }
-        if (Input.GetKey(KeyCode.E))
-        {
-            if (choiseCharacter < 3)
-            {
-                choiseCharacter = arrayCharacter[choiseCharacter + 1];
-            }
-            else
-            {
-                choiseCharacter = 0;
-            }
-        }
-        if (Input.GetKey(KeyCode.Alpha1))
-        {
-            
-        }
-        if (Input.GetKey(KeyCode.Alpha2))
-        {
+            Deactivate();
 
-        }
-        if (Input.GetKey(KeyCode.Alpha3))
-        {
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                active--;
+                CorrectActive();
+                units[active].acteve = true;
+            }
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                active++;
+                CorrectActive();
+                units[active].acteve = true;
+            }
 
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                girl.acteve = true;
+                active = 0;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                tank.acteve = true;
+                active = 1;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                warrior.acteve = true;
+                active = 2;
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                shooter.acteve = true;
+                active = 3;
+            }
         }
-        if (Input.GetKey(KeyCode.Alpha4))
-        {
+    }
 
+    private void Deactivate()
+    {
+        foreach (UnitBase unit in units)
+        {
+            unit.acteve = false;
+        }
+    }
+
+    private void CorrectActive()
+    {
+        if(active > 3)
+        {
+            active = 0;
+        }
+        if(active < 0)
+        {
+            active = 3;
         }
     }
 }

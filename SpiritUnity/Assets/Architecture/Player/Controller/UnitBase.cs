@@ -5,7 +5,10 @@ using UnityEngine;
 public class UnitBase : MonoBehaviour
 {
     public int HP;
-    public float maxSpeed, currentSpeed, timeAcc;
+    public bool acteve, isGrounded, isJump;
+    public float maxSpeed, currentSpeed, timeAcc, checkGoundRadius;
+    public Transform groudCheck;
+    public LayerMask whatIsGround;
 
     protected UnitBehaviourInteractor unitBehaviourInteractor;
 
@@ -15,10 +18,28 @@ public class UnitBase : MonoBehaviour
 
     }
 
-    protected virtual void Update()
+    protected virtual void Fall()
     {
-        InputProcessing();
-    } 
+
+    }
+
+    protected virtual void Jump()
+    {
+
+    }
+
+    protected virtual void FixedUpdate()
+    {
+        if(acteve == true)
+        {
+            InputProcessing();
+        }
+        if(Physics2D.OverlapCircle(groudCheck.position, checkGoundRadius, whatIsGround) == false && isJump == false)
+        {
+            Fall();
+        }
+    }
+    
 
     protected virtual void InputProcessing()
     {
@@ -31,4 +52,5 @@ public class UnitBase : MonoBehaviour
             HorisontalMove(-1);
         }
     }
+    
 }
