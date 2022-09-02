@@ -10,6 +10,7 @@ public class UnitBehaviourInteractor : Interactor
     TankActionsController tank;
     ShooterActionsController shooter;
     WarriorActionsController warrior;
+    public float jumpTime;
 
     Accelerator accelerator;
 
@@ -28,6 +29,7 @@ public class UnitBehaviourInteractor : Interactor
 
 
         accelerator = new Accelerator();
+        jumpTime = default;
     }
 
     public Vector2 HorisonMove(float currentSpeed, float maxSpeed, int dir, float timeAcc)
@@ -49,7 +51,7 @@ public class UnitBehaviourInteractor : Interactor
 
     public Vector2 Jump()
     {
-        //return new Vector2(accelerator.Acceleration(timeAcc, maxSpeed, currentSpeed, dir), 0);
-        return new Vector2(0, 3 * Time.fixedDeltaTime);
+        jumpTime += Time.fixedDeltaTime;
+        return new Vector2(0, accelerator.JumpAccelerator(100, jumpTime));
     }
 }

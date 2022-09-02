@@ -33,11 +33,7 @@ public class TankActionsController : UnitBase
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
-    }
-
-    protected override void InputProcessing()
-    {
-        base.InputProcessing();
+        base.StateMashine();
     }
 
     protected override void Jump()

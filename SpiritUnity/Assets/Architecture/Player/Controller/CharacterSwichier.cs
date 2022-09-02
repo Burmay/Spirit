@@ -31,13 +31,12 @@ public class CharacterSwichier : MonoBehaviour
         units[2] = warrior;
         units[3] = shooter;
 
-        girl.acteve = true;
+        girl.active = true;
         active = 0;
     }
 
     void Update()
     {
-        Debug.Log(active);
         if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.E))
         {
             Deactivate();
@@ -46,33 +45,33 @@ public class CharacterSwichier : MonoBehaviour
             {
                 active--;
                 CorrectActive();
-                units[active].acteve = true;
+                units[active].active = true;
             }
             if (Input.GetKeyDown(KeyCode.E))
             {
                 active++;
                 CorrectActive();
-                units[active].acteve = true;
+                units[active].active = true;
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                girl.acteve = true;
+                girl.active = true;
                 active = 0;
             }
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                tank.acteve = true;
+                tank.active = true;
                 active = 1;
             }
             if (Input.GetKeyDown(KeyCode.Alpha3))
             {
-                warrior.acteve = true;
+                warrior.active = true;
                 active = 2;
             }
             if (Input.GetKeyDown(KeyCode.Alpha4))
             {
-                shooter.acteve = true;
+                shooter.active = true;
                 active = 3;
             }
         }
@@ -82,7 +81,7 @@ public class CharacterSwichier : MonoBehaviour
     {
         foreach (UnitBase unit in units)
         {
-            unit.acteve = false;
+            unit.active = false;
         }
     }
 

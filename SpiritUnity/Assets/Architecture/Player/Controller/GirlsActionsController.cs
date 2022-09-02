@@ -26,20 +26,7 @@ public class GirlsActionsController : UnitBase
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
-    }
-
-    protected override void InputProcessing()
-    {
-        base.InputProcessing();
-        if (Input.GetKey(KeyCode.W))
-        {
-            Jump();
-            isJump = true;
-        }
-        else
-        {
-            isJump = false;
-        }
+        base.StateMashine();
     }
 
     protected override void Fall()
