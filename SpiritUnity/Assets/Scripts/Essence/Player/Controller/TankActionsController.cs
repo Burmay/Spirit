@@ -8,7 +8,6 @@ public class TankActionsController : UnitBase
 
     void Start()
     {
-        unitBehaviourInteractor = Game.GetInteractor<UnitBehaviourInteractor>();
         rigidbody = new Rigidbody2D();
         rigidbody = GetComponent<Rigidbody2D>();
 
@@ -16,6 +15,8 @@ public class TankActionsController : UnitBase
         this.maxSpeed = 1;
         base.timeAcc = 1f;
         currentSpeed = default;
+
+        GetLink();
     }
 
     protected override void HorisontalMove(int dir)
@@ -27,7 +28,7 @@ public class TankActionsController : UnitBase
     protected override void Fall()
     {
         base.Fall();
-        rigidbody.position -= unitBehaviourInteractor.Fall();
+        rigidbody.position += unitBehaviourInteractor.Fall(fallTime, fallB);
     }
 
     protected override void FixedUpdate()
@@ -36,9 +37,4 @@ public class TankActionsController : UnitBase
         base.StateMashine();
     }
 
-    protected override void Jump()
-    {
-        base.Jump();
-        rigidbody.position += unitBehaviourInteractor.Jump();
-    }
 }

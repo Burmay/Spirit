@@ -10,7 +10,7 @@ public class UnitBehaviourInteractor : Interactor
     TankActionsController tank;
     ShooterActionsController shooter;
     WarriorActionsController warrior;
-    public float jumpTime;
+    public bool onCreate;
 
     Accelerator accelerator;
 
@@ -29,8 +29,8 @@ public class UnitBehaviourInteractor : Interactor
 
 
         accelerator = new Accelerator();
-        jumpTime = default;
-    }
+        onCreate = true;
+    }   
 
     public Vector2 HorisonMove(float currentSpeed, float maxSpeed, int dir, float timeAcc)
     {
@@ -44,14 +44,15 @@ public class UnitBehaviourInteractor : Interactor
         }
     }
 
-    public Vector2 Fall()
+    public Vector2 Fall(float fallTime, float fallB)
     {
-        return new Vector2(0, 4 * Time.fixedDeltaTime);
+        fallTime += Time.fixedDeltaTime;
+        return new Vector2(0, accelerator.FallAccelerator(100, fallTime));
     }
 
-    public Vector2 Jump()
+    public Vector2 Jump(float jumpTime, float accB)
     {
         jumpTime += Time.fixedDeltaTime;
-        return new Vector2(0, accelerator.JumpAccelerator(100, jumpTime));
+        return new Vector2(0, accelerator.JumpAccelerator(accB, jumpTime));
     }
 }

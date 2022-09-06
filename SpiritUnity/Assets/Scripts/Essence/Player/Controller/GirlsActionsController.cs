@@ -8,7 +8,7 @@ public class GirlsActionsController : UnitBase
 
     void Start()
     {
-        unitBehaviourInteractor = Game.GetInteractor<UnitBehaviourInteractor>();
+        //unitBehaviourInteractor = Game.GetInteractor<UnitBehaviourInteractor>();
         rigidbody = new Rigidbody2D();
         rigidbody = GetComponent<Rigidbody2D>();
 
@@ -16,6 +16,8 @@ public class GirlsActionsController : UnitBase
         base.maxSpeed = 3;
         base.timeAcc = 0.2f;
         currentSpeed = default;
+
+        GetLink();
     }
 
     protected override void HorisontalMove(int dir)
@@ -29,15 +31,24 @@ public class GirlsActionsController : UnitBase
         base.StateMashine();
     }
 
+    public void MyDebug()
+    {
+        Debug.Log("На земле - " + isGrounded + " в прыжке - " + isJump + " Падает - " + isFall);
+    }
+
     protected override void Fall()
     {
         base.Fall();
-        rigidbody.position -= unitBehaviourInteractor.Fall();
+        //Debug.Log("Fall - " + unitBehaviourInteractor.Fall(fallTime, fallB) + " Jump - " + unitBehaviourInteractor.Jump(jumpTime, accB));
+        rigidbody.position += unitBehaviourInteractor.Fall(fallTime, fallB);
     }
 
     protected override void Jump()
     {
         base.Jump();
-        rigidbody.position += unitBehaviourInteractor.Jump();
+        if(isJump == true)
+        {
+            rigidbody.position += unitBehaviourInteractor.Jump(jumpTime, accB);
+        }
     }
 }

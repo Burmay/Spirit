@@ -2,20 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WarriorActionsController : UnitBase
+public class ShooterActionsController : UnitBase
 {
     Rigidbody2D rigidbody;
 
     void Start()
     {
-        unitBehaviourInteractor = Game.GetInteractor<UnitBehaviourInteractor>();
         rigidbody = new Rigidbody2D();
         rigidbody = GetComponent<Rigidbody2D>();
 
-        base.HP = 2;
-        base.maxSpeed = 2;
-        base.timeAcc = 0.5f;
+        base.HP = 1;
+        base.maxSpeed = 1.5f;
+        base.timeAcc = 0.7f;
         currentSpeed = default;
+
+        GetLink();
     }
 
     protected override void HorisontalMove(int dir)
@@ -32,12 +33,15 @@ public class WarriorActionsController : UnitBase
     protected override void Fall()
     {
         base.Fall();
-        rigidbody.position -= unitBehaviourInteractor.Fall();
+        rigidbody.position += unitBehaviourInteractor.Fall(fallTime, fallB);
     }
 
     protected override void Jump()
     {
         base.Jump();
-        rigidbody.position += unitBehaviourInteractor.Jump();
+        if (isJump == true)
+        {
+            rigidbody.position += unitBehaviourInteractor.Jump(jumpTime, accB);
+        }
     }
 }

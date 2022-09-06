@@ -82,6 +82,7 @@ public class CharacterSwichier : MonoBehaviour
         foreach (UnitBase unit in units)
         {
             unit.active = false;
+            unit.isJump = false;
         }
     }
 
