@@ -5,8 +5,8 @@ using UnityEngine;
 public class Essence : MonoBehaviour
 {
     public int HP;
-    public bool isGrounded, isJump, isFall;
-    public float maxSpeed, checkGoundRadius, accB, fallB;
+    public bool isGrounded, isJump, isFall, isChangeDir;
+    public float maxSpeed, checkGoundRadius, accB, fallB, Direction;
     protected float currentSpeed, fallTime, jumpTime, timeAcc;
     public Transform groudCheck;
     public LayerMask whatIsGround;

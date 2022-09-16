@@ -4,31 +4,26 @@ using UnityEngine;
 
 public class GirlsActionsController : UnitBase
 {
-    Rigidbody2D rigidbody;
 
-    void Start()
+    protected override void Start()
     {
-        //unitBehaviourInteractor = Game.GetInteractor<UnitBehaviourInteractor>();
-        rigidbody = new Rigidbody2D();
-        rigidbody = GetComponent<Rigidbody2D>();
-
+        base.Start();
         base.HP = 3;
         base.maxSpeed = 3;
         base.timeAcc = 0.2f;
-        currentSpeed = default;
-
-        GetLink();
+        abilityTojump = true;
     }
 
     protected override void HorisontalMove(int dir)
     {
-        rigidbody.position += (unitBehaviourInteractor.HorisonMove(currentSpeed, maxSpeed, dir, timeAcc));
+        base.HorisontalMove(dir);
     }
 
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
         base.StateMashine();
+        //MyDebug();
     }
 
     public void MyDebug()
@@ -39,16 +34,10 @@ public class GirlsActionsController : UnitBase
     protected override void Fall()
     {
         base.Fall();
-        //Debug.Log("Fall - " + unitBehaviourInteractor.Fall(fallTime, fallB) + " Jump - " + unitBehaviourInteractor.Jump(jumpTime, accB));
-        rigidbody.position += unitBehaviourInteractor.Fall(fallTime, fallB);
     }
 
     protected override void Jump()
     {
         base.Jump();
-        if(isJump == true)
-        {
-            rigidbody.position += unitBehaviourInteractor.Jump(jumpTime, accB);
-        }
     }
 }

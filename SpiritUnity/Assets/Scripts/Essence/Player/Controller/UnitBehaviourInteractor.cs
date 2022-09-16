@@ -32,15 +32,15 @@ public class UnitBehaviourInteractor : Interactor
         onCreate = true;
     }   
 
-    public Vector2 HorisonMove(float currentSpeed, float maxSpeed, int dir, float timeAcc)
+    public float HorisonMove(float currentSpeed, float maxSpeed, int dir, float timeAcc)
     {
         if(Math.Abs(currentSpeed) >= maxSpeed)
         {
-            return new Vector2(0,0);
+            return 0;
         }
         else
         {
-            return new Vector2(accelerator.Acceleration(timeAcc, maxSpeed, currentSpeed, dir),0);
+            return accelerator.Acceleration(timeAcc, maxSpeed, currentSpeed, dir);
         }
     }
 

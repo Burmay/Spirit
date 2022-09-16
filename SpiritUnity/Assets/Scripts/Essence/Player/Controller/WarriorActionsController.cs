@@ -4,24 +4,19 @@ using UnityEngine;
 
 public class WarriorActionsController : UnitBase
 {
-    Rigidbody2D rigidbody;
 
-    void Start()
+    protected override void Start()
     {
-        rigidbody = new Rigidbody2D();
-        rigidbody = GetComponent<Rigidbody2D>();
-
+        base.Start();
         base.HP = 2;
         base.maxSpeed = 2;
         base.timeAcc = 0.5f;
-        currentSpeed = default;
-
-        GetLink();
+        abilityTojump = false;
     }
 
     protected override void HorisontalMove(int dir)
     {
-        rigidbody.position += unitBehaviourInteractor.HorisonMove(currentSpeed, maxSpeed, dir, timeAcc);
+        base.HorisontalMove(dir);
     }
 
     protected override void FixedUpdate()
@@ -33,6 +28,5 @@ public class WarriorActionsController : UnitBase
     protected override void Fall()
     {
         base.Fall();
-        rigidbody.position += unitBehaviourInteractor.Fall(fallTime, fallB);
     }
 }

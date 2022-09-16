@@ -8,8 +8,9 @@ public class EnemyBase : Essence
     {
         if (unitBehaviourInteractor.onCreate == true)
         {
-            if (isGrounded == false) fallTime += Time.fixedDeltaTime; Fall();
-            if (isGrounded == true) fallTime = default;
+            if (isGrounded == false) { fallTime += Time.fixedDeltaTime; Fall(); }
+            if (isGrounded == true) { fallTime = default; }
+            Debug.Log(isGrounded);
         }
     }
 
