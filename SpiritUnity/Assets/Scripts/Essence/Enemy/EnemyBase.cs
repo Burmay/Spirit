@@ -10,7 +10,6 @@ public class EnemyBase : Essence
         {
             if (isGrounded == false) { fallTime += Time.fixedDeltaTime; Fall(); }
             if (isGrounded == true) { fallTime = default; }
-            Debug.Log(isGrounded);
         }
     }
 

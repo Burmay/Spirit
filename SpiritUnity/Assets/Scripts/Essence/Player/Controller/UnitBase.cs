@@ -5,9 +5,11 @@ using System;
 
 public class UnitBase : Essence
 {
-    public bool active, abilityTojump;
+    [SerializeField] protected SpriteRenderer renderer;
+
+    public bool active, abilityTojump, isTurn, prevDir, newDir;
     protected Animator animator;
-    protected float speed;
+    protected float speed, maxTurnTime, currentTurnTime;
     protected Rigidbody2D rigidbody;
 
     //protected UnitBehaviourInteractor unitBehaviourInteractor;
@@ -18,18 +20,27 @@ public class UnitBase : Essence
         rigidbody = GetComponent<Rigidbody2D>();
         animator = new Animator();
         animator = GetComponent<Animator>();
+        renderer = new SpriteRenderer();
+        renderer = GetComponent<SpriteRenderer>();
         GetLink();
         currentSpeed = default;
+        prevDir = true;
+        newDir = true;
+        maxTurnTime = 0.5f;
     }
 
     protected void StateMashine()
     {
         if(unitBehaviourInteractor.onCreate == true)
         {
+        
             if (active == true)
             {
+
+                if (prevDir != newDir || isTurn == true) { Turn(); }
+
                 // Начать прыжок или продолжить его
-                if (Input.GetKey(KeyCode.W) && isGrounded == true || Input.GetKey(KeyCode.W) && isJump && abilityTojump == true)
+                if ((Input.GetKey(KeyCode.W) && isGrounded == true) || (Input.GetKey(KeyCode.W) && isJump) && abilityTojump == true)
                 {
                     Jump();
                 }
@@ -37,17 +48,25 @@ public class UnitBase : Essence
                 {
                     isJump = false;
                 }
+                prevDir = newDir;
+                if(speed > 0)
+                {
+                    newDir = true;
+                }
+                else
+                {
+                    prevDir = false;
+                }
                 if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))
                 {
-                    if (Input.GetKey(KeyCode.D))
+
+                    if (Input.GetKey(KeyCode.D) && isTurn == false)
                     {
-                        animator.SetBool("Dir", true);
                         HorisontalMove(1);
                     }
-                    if (Input.GetKey(KeyCode.A))
+                    if (Input.GetKey(KeyCode.A) && isTurn == false)
                     {
                         HorisontalMove(-1);
-                        animator.SetBool("Dir", false);
                     }
                     animator.SetFloat("Speed", Math.Abs(speed/ Time.fixedDeltaTime));
                     animator.SetBool("Stop", false);
@@ -89,6 +108,25 @@ public class UnitBase : Essence
         {
             rigidbody.position += unitBehaviourInteractor.Jump(jumpTime, accB);
         }
+    }
+
+    protected virtual void Turn()
+    {
+        currentTurnTime += Time.fixedDeltaTime;
+        Debug.Log(currentTurnTime);
+        if(currentTurnTime < maxTurnTime)
+        {
+            isTurn = true;
+            animator.SetBool("IsTurn", true);
+        }
+        else
+        {
+            isTurn = false;
+            animator.SetBool("IsTurn", false);
+             currentTurnTime = default;
+            renderer.flipX = newDir;
+        }
+
     }
 
     protected override void FixedUpdate()
