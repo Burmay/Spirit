@@ -7,9 +7,9 @@ public class UnitBase : Essence
 {
     [SerializeField] protected SpriteRenderer renderer;
 
-    public bool active, abilityTojump, isTurn, prevDir, newDir;
+    public bool active, abilityTojump, isTurn;
     protected Animator animator;
-    protected float speed, maxTurnTime, currentTurnTime;
+    public float speed, turnDelay;
     protected Rigidbody2D rigidbody;
 
     //protected UnitBehaviourInteractor unitBehaviourInteractor;
@@ -24,9 +24,7 @@ public class UnitBase : Essence
         renderer = GetComponent<SpriteRenderer>();
         GetLink();
         currentSpeed = default;
-        prevDir = true;
-        newDir = true;
-        maxTurnTime = 0.5f;
+        turnDelay = 1f;
     }
 
     protected void StateMashine()
@@ -36,9 +34,6 @@ public class UnitBase : Essence
         
             if (active == true)
             {
-
-                if (prevDir != newDir || isTurn == true) { Turn(); }
-
                 // Начать прыжок или продолжить его
                 if ((Input.GetKey(KeyCode.W) && isGrounded == true) || (Input.GetKey(KeyCode.W) && isJump) && abilityTojump == true)
                 {
@@ -48,25 +43,38 @@ public class UnitBase : Essence
                 {
                     isJump = false;
                 }
-                prevDir = newDir;
-                if(speed > 0)
-                {
-                    newDir = true;
-                }
-                else
-                {
-                    prevDir = false;
-                }
                 if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))
                 {
 
                     if (Input.GetKey(KeyCode.D) && isTurn == false)
                     {
-                        HorisontalMove(1);
+                        if(renderer.flipX == true)
+                        {
+                            if(isTurn == false)
+                            {
+                                StartTurn();
+                            }
+                            isTurn = true;
+                        }
+                        else
+                        {
+                            HorisontalMove(1);
+                        }
                     }
                     if (Input.GetKey(KeyCode.A) && isTurn == false)
                     {
-                        HorisontalMove(-1);
+                        if (renderer.flipX == false)
+                        {
+                            if (isTurn == false)
+                            {
+                                StartTurn();
+                            }
+                            isTurn = true;
+                        }
+                        else
+                        {
+                            HorisontalMove(-1);
+                        }
                     }
                     animator.SetFloat("Speed", Math.Abs(speed/ Time.fixedDeltaTime));
                     animator.SetBool("Stop", false);
@@ -82,6 +90,12 @@ public class UnitBase : Essence
             if (isFall == false) { fallTime = default; }
         }
 
+    }
+
+    private void StartTurn()
+    {
+        Invoke("Turn", turnDelay);
+        animator.SetBool("IsTurn", true);
     }
 
     protected virtual void HorisontalMove(int dir)
@@ -112,21 +126,12 @@ public class UnitBase : Essence
 
     protected virtual void Turn()
     {
-        currentTurnTime += Time.fixedDeltaTime;
-        Debug.Log(currentTurnTime);
-        if(currentTurnTime < maxTurnTime)
-        {
-            isTurn = true;
-            animator.SetBool("IsTurn", true);
-        }
-        else
-        {
-            isTurn = false;
-            animator.SetBool("IsTurn", false);
-             currentTurnTime = default;
-            renderer.flipX = newDir;
-        }
-
+        Debug.Log(renderer.flipX);
+        if(renderer.flipX == false) { renderer.flipX = true; }
+        else if(renderer.flipX == true) { renderer.flipX = false; }
+        //renderer.flipX = renderer.flipX = true ? true : false;
+        isTurn = false;
+        animator.SetBool("IsTurn", false);
     }
 
     protected override void FixedUpdate()

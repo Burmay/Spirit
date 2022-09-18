@@ -870,8 +870,8 @@ MonoBehaviour:
   active: 0
   abilityTojump: 0
   isTurn: 0
-  prevDir: 0
-  newDir: 0
+  speed: 0
+  turnDelay: 0
 --- !u!50 &615217037
 Rigidbody2D:
   serializedVersion: 4
@@ -1438,8 +1438,8 @@ MonoBehaviour:
   active: 0
   abilityTojump: 0
   isTurn: 0
-  prevDir: 0
-  newDir: 0
+  speed: 0
+  turnDelay: 0
 --- !u!50 &1229056172
 Rigidbody2D:
   serializedVersion: 4
@@ -1909,8 +1909,8 @@ MonoBehaviour:
   active: 0
   abilityTojump: 0
   isTurn: 0
-  prevDir: 0
-  newDir: 0
+  speed: 0
+  turnDelay: 0
 --- !u!95 &1492630432
 Animator:
   serializedVersion: 4
@@ -2469,8 +2469,8 @@ MonoBehaviour:
   active: 0
   abilityTojump: 0
   isTurn: 0
-  prevDir: 0
-  newDir: 0
+  speed: 0
+  turnDelay: 10
 --- !u!50 &2012271505
 Rigidbody2D:
   serializedVersion: 4
