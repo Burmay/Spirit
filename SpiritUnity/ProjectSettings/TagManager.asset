@@ -9,6 +9,7 @@ TagManager:
   - Warrior
   - Shooter
   - BaseUnit
+  - Graph
   layers:
   - Default
   - TransparentFX

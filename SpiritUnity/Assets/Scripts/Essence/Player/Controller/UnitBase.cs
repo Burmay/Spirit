@@ -35,7 +35,7 @@ public class UnitBase : Essence
             if (active == true)
             {
                 // Начать прыжок или продолжить его
-                if ((Input.GetKey(KeyCode.W) && isGrounded == true) || (Input.GetKey(KeyCode.W) && isJump) && abilityTojump == true)
+                if (((Input.GetKey(KeyCode.W) && isGrounded == true) || (Input.GetKey(KeyCode.W) && isJump)) && abilityTojump == true)
                 {
                     Jump();
                 }
@@ -77,7 +77,10 @@ public class UnitBase : Essence
                         }
                     }
                     animator.SetFloat("Speed", Math.Abs(speed/ Time.fixedDeltaTime));
-                    animator.SetBool("Stop", false);
+                    if(animator.GetBool("IsTurn") == false)
+                    {
+                        animator.SetBool("Stop", false);
+                    }
                 }
                 else
                 {
@@ -94,8 +97,9 @@ public class UnitBase : Essence
 
     private void StartTurn()
     {
-        Invoke("Turn", turnDelay);
+        //Invoke("Turn", turnDelay);
         animator.SetBool("IsTurn", true);
+        animator.SetBool("Stop", true);
     }
 
     protected virtual void HorisontalMove(int dir)
@@ -124,9 +128,9 @@ public class UnitBase : Essence
         }
     }
 
-    protected virtual void Turn()
+    protected virtual void TurnRender()
     {
-        Debug.Log(renderer.flipX);
+        Debug.Log("EventTurn");
         if(renderer.flipX == false) { renderer.flipX = true; }
         else if(renderer.flipX == true) { renderer.flipX = false; }
         //renderer.flipX = renderer.flipX = true ? true : false;
@@ -137,6 +141,13 @@ public class UnitBase : Essence
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
+    }
+
+    public void Swich()
+    {
+        active = false;
+        isJump = false;
+        animator.SetBool("Stop", true);
     }
     
 }
