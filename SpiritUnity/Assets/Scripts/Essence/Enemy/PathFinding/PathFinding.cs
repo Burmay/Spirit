@@ -2,15 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PathFinding
+public class PathFinding : Interactor
 {
-    private Cost openList, closeList;
+    GameObject[] graphsTag;
+    GameObject[,] graphs;
 
-}
+    public override void OnStart()
+    {
+        base.OnStart();
 
-public struct Cost
-{
-    public int gCost; // от начала
-    public int hCost; // от конца
-    public int fCost; // сумма
+        graphsTag = GameObject.FindGameObjectsWithTag("Graph");
+        int platform = 0;
+        int arrayN = 0;
+        for (int i = 0; i < graphsTag.Length; i++)
+        {
+            if(graphsTag[i+1].transform.position.x < graphsTag[i].transform.position.x)
+            {
+                platform++;
+                arrayN = default;
+                graphs[arrayN, platform] = graphsTag[i];
+            }
+            else
+            {
+                graphs[arrayN, platform] = graphsTag[i];
+                arrayN++;
+            }
+            Debug.Log(i);
+        }
+
+    }
+
+    private void MakeTransition()
+    {
+        
+    }
 }

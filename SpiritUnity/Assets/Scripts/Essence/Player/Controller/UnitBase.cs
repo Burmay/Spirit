@@ -141,6 +141,7 @@ public class UnitBase : Essence
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
+        currentSpeed = rigidbody.velocity.magnitude;
     }
 
     public void Swich()

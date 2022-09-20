@@ -17,6 +17,7 @@ public class FirstSceneConfig : SceneConfig
 
         this.CreateInteractor<InventoryInteractor>(interactorsRoll);
         this.CreateInteractor<UnitBehaviourInteractor>(interactorsRoll);
+        this.CreateInteractor<PathFinding>(interactorsRoll);
 
         return interactorsRoll;
     }

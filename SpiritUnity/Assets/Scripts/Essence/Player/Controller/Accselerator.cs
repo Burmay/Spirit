@@ -8,21 +8,7 @@ using UnityEngine;
     public float Acceleration(float accTime, float maxSpeed, float momentSpeed, int dir)
     {
         float currentSpeed;
-        if (Math.Abs(accTime) > Double.Epsilon)
-        {
-            if (momentSpeed < maxSpeed)
-            {
-                currentSpeed = Time.deltaTime / accTime;
-            }
-            else
-            {
-                currentSpeed = Time.deltaTime / accTime;
-            }
-        }
-        else
-        {
-            currentSpeed = 0;
-        }
+        currentSpeed = maxSpeed * Time.fixedDeltaTime;
         if(dir > 0)
         {
             return currentSpeed;
