@@ -32,8 +32,4 @@ public class PathFinding : Interactor
 
     }
 
-    private void MakeTransition()
-    {
-        
-    }
 }

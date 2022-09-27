@@ -6,7 +6,7 @@ using System;
 public class CreateGraphs : MonoBehaviour
 {
     public GameObject graph;
-    private float heightUp, width, height, rightX, leftX, rightY, leftY;
+    private float heightUp, width, height, rightX, leftX;
 
     void Start()
     {
@@ -28,8 +28,8 @@ public class CreateGraphs : MonoBehaviour
         leftX = transform.position.x - width / 2;
         rightX = transform.position.x + width / 2;
         //y
-        leftY = transform.position.y - width / 2;
-        rightY = transform.position.y + width / 2;
+        //leftY = transform.position.y - width / 2;
+        //rightY = transform.position.y + width / 2;
     }
 
 }
