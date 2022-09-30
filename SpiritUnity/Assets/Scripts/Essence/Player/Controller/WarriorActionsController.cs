@@ -14,9 +14,9 @@ public class WarriorActionsController : UnitBase
         abilityTojump = false;
     }
 
-    protected override void HorisontalMove(int dir)
+    protected override void HorisontalMove(int dir, bool walk = true)
     {
-        base.HorisontalMove(dir);
+        base.HorisontalMove(dir, walk);
     }
 
     protected override void FixedUpdate()

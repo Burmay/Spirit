@@ -7,13 +7,13 @@ public class GraphCreator : MonoBehaviour
 {
     public GameObject[] allGround;
     public GameObject graphObj;
-    bool[,] graphs;
+    float[,] graphs;
     private float heightUp, width, height, rightX, leftX;
 
     public void Start()
     {
-        int j = 0;
-        int k = 0;
+        int platform = 0;
+        int numberG = 0;
         allGround = GameObject.FindGameObjectsWithTag("Ground");
 
         foreach(GameObject ground in allGround)
@@ -22,9 +22,9 @@ public class GraphCreator : MonoBehaviour
             for (int i = 0; i < Math.Abs(leftX - rightX); i++)
             {
                 Instantiate(graphObj, new Vector3(leftX + i + 0.5f, transform.position.y + height / 2 + heightUp, transform.position.z), Quaternion.identity);
-                
+                graphs[platform, numberG] = 9;
             }
-            j++;
+            platform++;
         }
 
     }

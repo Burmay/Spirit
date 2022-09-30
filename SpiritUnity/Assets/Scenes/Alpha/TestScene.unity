@@ -201,12 +201,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 72664270}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.022000313, y: 1.51, z: -10}
+  m_LocalPosition: {x: -12.522, y: 3.01, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2012271503}
-  m_RootOrder: 1
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &72664274
 MonoBehaviour:
@@ -271,6 +271,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b0e2bba03380464d98474ae62f8416e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  girl: {fileID: 1492630431}
+  tank: {fileID: 2012271504}
+  shooter: {fileID: 1229056171}
+  warrior: {fileID: 615217036}
 --- !u!4 &95346759
 Transform:
   m_ObjectHideFlags: 0
@@ -535,7 +539,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 615217033}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16, y: 1, z: 0}
+  m_LocalPosition: {x: -16.5, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -556,15 +560,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 0
-  isGrounded: 0
-  isJump: 0
-  isFall: 0
-  isChangeDir: 0
   maxSpeed: 0
-  checkGoundRadius: 0.15
+  checkGoundRadius: 0.125
   accB: 0
   fallB: 10
   Direction: 0
+  fallTime: 0
+  jumpTime: 0
+  timeAcc: 0
   groudCheck: {fileID: 1270671442}
   whatIsGround:
     serializedVersion: 2
@@ -572,8 +575,6 @@ MonoBehaviour:
   jumpValue: {x: 0, y: 0}
   renderer: {fileID: 0}
   active: 0
-  abilityTojump: 0
-  isTurn: 0
   speed: 0
   turnDelay: 0
 --- !u!50 &615217037
@@ -723,7 +724,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 687198292}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4, y: 6, z: 0}
+  m_LocalPosition: {x: -4.5, y: 5.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -744,7 +745,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.16973579}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -755,7 +756,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.6666666, y: 1.3271949}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!50 &687198296
 Rigidbody2D:
@@ -791,15 +792,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 0
-  isGrounded: 0
-  isJump: 0
-  isFall: 0
-  isChangeDir: 0
   maxSpeed: 0
-  checkGoundRadius: 0.5
+  checkGoundRadius: 0.125
   accB: 0
   fallB: 10
   Direction: 0
+  fallTime: 0
+  jumpTime: 0
+  timeAcc: 0
   groudCheck: {fileID: 1914068649}
   whatIsGround:
     serializedVersion: 2
@@ -1012,7 +1012,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1229056168}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16, y: 6, z: 0}
+  m_LocalPosition: {x: -16.5, y: 5.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1033,15 +1033,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 0
-  isGrounded: 0
-  isJump: 0
-  isFall: 0
-  isChangeDir: 0
   maxSpeed: 0
-  checkGoundRadius: 0.15
+  checkGoundRadius: 0.125
   accB: 10
   fallB: 1
   Direction: 0
+  fallTime: 0
+  jumpTime: 0
+  timeAcc: 0
   groudCheck: {fileID: 2095516623}
   whatIsGround:
     serializedVersion: 2
@@ -1049,8 +1048,6 @@ MonoBehaviour:
   jumpValue: {x: 0, y: 0}
   renderer: {fileID: 0}
   active: 0
-  abilityTojump: 0
-  isTurn: 0
   speed: 0
   turnDelay: 0
 --- !u!50 &1229056172
@@ -1498,7 +1495,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1492630426}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4, y: 1, z: 0}
+  m_LocalPosition: {x: -4.5, y: 1.5, z: 0}
   m_LocalScale: {x: 0.5, y: 0.47675, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1519,15 +1516,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 0
-  isGrounded: 0
-  isJump: 0
-  isFall: 0
-  isChangeDir: 0
   maxSpeed: 0
   checkGoundRadius: 0.1
   accB: 10
   fallB: 1
   Direction: 0
+  fallTime: 0
+  jumpTime: 0
+  timeAcc: 0
   groudCheck: {fileID: 154143259}
   whatIsGround:
     serializedVersion: 2
@@ -1535,8 +1531,6 @@ MonoBehaviour:
   jumpValue: {x: 0, y: 0}
   renderer: {fileID: 0}
   active: 0
-  abilityTojump: 0
-  isTurn: 0
   speed: 0
   turnDelay: 0
 --- !u!95 &1492630432
@@ -1937,12 +1931,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2012271501}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10, y: 6, z: 0}
+  m_LocalPosition: {x: -12.5, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1958305135}
-  - {fileID: 72664273}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1959,15 +1952,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 0
-  isGrounded: 0
-  isJump: 0
-  isFall: 0
-  isChangeDir: 0
   maxSpeed: 1
   checkGoundRadius: 0.1
   accB: 0
   fallB: 1
   Direction: 0
+  fallTime: 0
+  jumpTime: 0
+  timeAcc: 0
   groudCheck: {fileID: 1958305135}
   whatIsGround:
     serializedVersion: 2
@@ -1975,8 +1967,6 @@ MonoBehaviour:
   jumpValue: {x: 0, y: 0}
   renderer: {fileID: 0}
   active: 0
-  abilityTojump: 0
-  isTurn: 0
   speed: 0
   turnDelay: 10
 --- !u!50 &2012271505

@@ -7,9 +7,10 @@ public class UnitBase : Essence
 {
     [SerializeField] protected SpriteRenderer renderer;
 
-    public bool active, abilityTojump, isTurn;
+    protected bool  abilityTojump, isTurn, slowingDown, walk;
+    public bool active;
     protected Animator animator;
-    public float speed, turnDelay;
+    [SerializeField] protected float speed, turnDelay;
     protected Rigidbody2D rigidbody;
 
     //protected UnitBehaviourInteractor unitBehaviourInteractor;
@@ -25,13 +26,15 @@ public class UnitBase : Essence
         GetLink();
         currentSpeed = default;
         turnDelay = 1f;
+
+        animator.SetBool("Stop", true);
     }
 
     protected void StateMashine()
     {
         if(unitBehaviourInteractor.onCreate == true)
         {
-        
+            // Если выбран он
             if (active == true)
             {
                 // Начать прыжок или продолжить его
@@ -43,43 +46,72 @@ public class UnitBase : Essence
                 {
                     isJump = false;
                 }
-                if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))
+
+                // Двигаться на крейсерской или начать поворот
+                if ((Input.GetKey(KeyCode.D) && slowingDown == false) || (Input.GetKey(KeyCode.A) && slowingDown == false))
                 {
 
-                    if (Input.GetKey(KeyCode.D) && isTurn == false)
+
+                    if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))
                     {
-                        if(renderer.flipX == true)
+
+                        if (Input.GetKey(KeyCode.D) && isTurn == false && slowingDown == false)
                         {
-                            if(isTurn == false)
+                            if (renderer.flipX == true)
                             {
-                                StartTurn();
+                                if (isTurn == false)
+                                {
+                                    StartTurn();
+                                }
+                                isTurn = true;
                             }
-                            isTurn = true;
+                            else
+                            {
+                                HorisontalMove(1);
+                                animator.SetBool("Stop", false);
+                            }
                         }
-                        else
+                        if ((Input.GetKey(KeyCode.A) && isTurn == false) && slowingDown == false)
                         {
-                            HorisontalMove(1);
+                            if (renderer.flipX == false)
+                            {
+                                if (isTurn == false)
+                                {
+                                    StartTurn();
+                                }
+                                isTurn = true;
+                            }
+                            else
+                            {
+                                HorisontalMove(-1);
+                                animator.SetBool("Stop", false);
+                            }
                         }
                     }
-                    if (Input.GetKey(KeyCode.A) && isTurn == false)
+                }
+                // разгоняться или тормозить
+                else if (slowingDown == true)
+                {
+                    if (renderer.flipX == false)
                     {
-                        if (renderer.flipX == false)
-                        {
-                            if (isTurn == false)
-                            {
-                                StartTurn();
-                            }
-                            isTurn = true;
-                        }
-                        else
-                        {
-                            HorisontalMove(-1);
-                        }
+                        HorisontalMove(1, false);
                     }
-                    animator.SetFloat("Speed", Math.Abs(speed/ Time.fixedDeltaTime));
-                    if(animator.GetBool("IsTurn") == false)
+                    else
                     {
-                        animator.SetBool("Stop", false);
+                        HorisontalMove(-1, false);
+                    }
+                }
+
+                // продолжиться двигаться до конца анимации
+                else if(walk == true)
+                {
+                    if (renderer.flipX == false)
+                    {
+                        HorisontalMove(1);
+                    }
+                    else
+                    {
+                        HorisontalMove(-1);
                     }
                 }
                 else
@@ -87,6 +119,7 @@ public class UnitBase : Essence
                     animator.SetBool("Stop", true);
                 }
             }
+            // счёт времени прыжка и падения для разгона
             if (isJump == false && isGrounded == false) { isFall = true; fallTime += Time.fixedDeltaTime; Fall(); }
             if (isGrounded == true) { isFall = false; }
             if (isJump == false) { jumpTime = default; }
@@ -98,14 +131,21 @@ public class UnitBase : Essence
     private void StartTurn()
     {
         //Invoke("Turn", turnDelay);
-        animator.SetBool("IsTurn", true);
+        animator.SetBool("DirChange", true);
         animator.SetBool("Stop", true);
     }
 
-    protected virtual void HorisontalMove(int dir)
+    protected virtual void HorisontalMove(int dir, bool walk = true)
     {
         speed = unitBehaviourInteractor.HorisonMove(currentSpeed, maxSpeed, dir, timeAcc);
-        rigidbody.position += new Vector2(speed, 0);
+        if(walk == true)
+        {
+            rigidbody.position += new Vector2(speed, 0);
+        }
+        else
+        {
+            rigidbody.position += new Vector2(speed/1.5f, 0);
+        }
     }
 
     protected override void Fall()
@@ -128,14 +168,14 @@ public class UnitBase : Essence
         }
     }
 
-    protected virtual void TurnRender()
+    protected virtual void TurnOff()
     {
         Debug.Log("EventTurn");
         if(renderer.flipX == false) { renderer.flipX = true; }
         else if(renderer.flipX == true) { renderer.flipX = false; }
         //renderer.flipX = renderer.flipX = true ? true : false;
         isTurn = false;
-        animator.SetBool("IsTurn", false);
+        animator.SetBool("DirChange", false);
     }
 
     protected override void FixedUpdate()
@@ -150,5 +190,41 @@ public class UnitBase : Essence
         isJump = false;
         animator.SetBool("Stop", true);
     }
-    
+
+
+    public void SlowingDownOn()
+    {
+        slowingDown = true;
+    }
+    public void SlowingDownOff()
+    {
+        slowingDown = false;
+    }
+    public void WalkOn()
+    {
+        walk = true;
+    }
+    public void WalkOff()
+    {
+        walk = false;
+    }
+
+    public void TurnOn()
+    {
+        isTurn = true;
+    }
+    public void StopAfterWalk()
+    {
+        if((renderer.flipX == true && Input.GetKey(KeyCode.A) == false) || (renderer.flipX == false && Input.GetKey(KeyCode.D) == false))
+        {
+            animator.SetBool("StopAfterWalk", true);
+        }
+    }
+    public void StopAfterWalkReset()
+    {
+        animator.SetBool("StopAfterWalk", false);
+    }
+
+
+
 }

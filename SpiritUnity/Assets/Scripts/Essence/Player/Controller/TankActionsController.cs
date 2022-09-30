@@ -9,15 +9,15 @@ public class TankActionsController : UnitBase
     {
         base.Start();
         base.HP = 3;
-        //base.maxSpeed = 1;
         base.maxSpeed = 1;
         base.timeAcc = 1f;
         abilityTojump = false;
     }
 
-    protected override void HorisontalMove(int dir)
+    protected override void HorisontalMove(int dir, bool walk = true)
    {
-        base.HorisontalMove(dir);
+        Debug.Log(slowingDown);
+        base.HorisontalMove(dir, walk);
     }
 
     protected override void Fall()

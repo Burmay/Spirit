@@ -5,26 +5,17 @@ using UnityEngine;
 public class CharacterSwichier : MonoBehaviour
 {
     GameObject girlTag, tankTag, warriorTag, shooterTag;
-    GirlsActionsController girl;
-    TankActionsController tank;
-    ShooterActionsController shooter;
-    WarriorActionsController warrior;
+    [SerializeField] GirlsActionsController girl;
+    [SerializeField]  TankActionsController tank;
+    [SerializeField] ShooterActionsController shooter;
+    [SerializeField] WarriorActionsController warrior;
 
     UnitBase[] units;
-    int active;
+    private int active;
 
     private void Start()
     {
         units = new UnitBase[4];
-        girlTag = GameObject.FindGameObjectWithTag("Girl");
-        tankTag = GameObject.FindGameObjectWithTag("Tank");
-        warriorTag = GameObject.FindGameObjectWithTag("Warrior");
-        shooterTag = GameObject.FindGameObjectWithTag("Shooter");
-
-        girl = girlTag.GetComponent<GirlsActionsController>();
-        tank = tankTag.GetComponent<TankActionsController>();
-        warrior = warriorTag.GetComponent<WarriorActionsController>();
-        shooter = shooterTag.GetComponent<ShooterActionsController>();
 
         units[0] = girl;
         units[1] = tank;
