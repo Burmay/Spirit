@@ -102,7 +102,7 @@ public class UnitBase : Essence
                     }
                 }
 
-                // продолжиться двигаться до конца анимации
+                // продолжать двигаться до конца анимации
                 else if(walk == true)
                 {
                     if (renderer.flipX == false)

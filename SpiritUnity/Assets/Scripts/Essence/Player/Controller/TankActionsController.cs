@@ -9,7 +9,7 @@ public class TankActionsController : UnitBase
     {
         base.Start();
         base.HP = 3;
-        base.maxSpeed = 1;
+        base.maxSpeed = 0.5f;
         base.timeAcc = 1f;
         abilityTojump = false;
     }

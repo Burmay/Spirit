@@ -10,6 +10,7 @@ TagManager:
   - Shooter
   - BaseUnit
   - Graph
+  - Ground
   layers:
   - Default
   - TransparentFX

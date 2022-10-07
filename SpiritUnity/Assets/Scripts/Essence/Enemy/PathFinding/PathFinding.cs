@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PathFinding : Interactor
+public class PathFindingInteractor : Interactor
 {
     GameObject[] graphsTag;
     GameObject[,] graphs;
